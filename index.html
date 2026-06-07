@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>HayeeFurn | Premium Furniture in Thanjavur</title>
+  <!-- Google Fonts + Tailwind CSS + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Three.js core and add-ons from CDN -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+      }
+    }
+  </script>
+  <style>
+    /* Custom smooth scroll and global overrides */
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0a0a0a;
+      overflow-x: hidden;
+    }
+    /* Custom glassmorphism panel */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 2rem;
+    }
+    .glass-card {
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+    .glass-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(218, 165, 32, 0.5);
+      box-shadow: 0 25px 40px -12px rgba(0,0,0,0.5);
+    }
+    /* Custom 3D canvas container */
+    #hero-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none; /* Allow content clicking through canvas */
+    }
+    /* Scroll indicator animation */
+    .scroll-indicator {
+      animation: bounce 2.2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(10px); opacity: 1; }
+    }
+    /* product showcase grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    /* modern button gradient */
+    .btn-gold {
+      background: linear-gradient(135deg, #c7a252 0%, #b58b3a 100%);
+      transition: all 0.3s ease;
+    }
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #dbb15e 0%, #c79b46 100%);
+      transform: scale(1.03);
+      box-shadow: 0 10px 25px -5px rgba(199, 162, 82, 0.4);
+    }
+    /* custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1a1a1a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #c7a252;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body class="text-white">
+
+  <!-- 3D Canvas Background (Floating Rotating Furniture Models + Particle stars) -->
+  <canvas id="hero-canvas"></canvas>
+
+  <!-- Main Content Layer (higher z-index) -->
+  <div class="relative z-10">
+    <!-- Modern Navigation Bar -->
+    <nav class="flex justify-between items-center px-6 md:px-12 py-5 backdrop-blur-md bg-black/30 border-b border-white/10 sticky top-0 z-50">
+      <div class="flex items-center gap-2">
+        <i class="fas fa-crown text-2xl text-amber-400"></i>
+        <span class="text-2xl font-bold tracking-tight bg-gradient-to-r from-amber-200 to-amber-500 bg-clip-text text-transparent">HayeeFurn</span>
+      </div>
+      <div class="hidden md:flex gap-8 text-sm font-medium">
+        <a href="#home" class="hover:text-amber-400 transition">Home</a>
+        <a href="#showcase" class="hover:text-amber-400 transition">Signature Collection</a>
+        <a href="#branches" class="hover:text-amber-400 transition">Branches</a>
+        <a href="#contact" class="hover:text-amber-400 transition">Contact</a>
+      </div>
+      <a href="tel:+917299030406" class="bg-amber-600/80 hover:bg-amber-600 px-5 py-2 rounded-full text-sm font-semibold backdrop-blur-sm transition shadow-lg">
+        <i class="fas fa-phone-alt mr-2"></i>Call Now
+      </a>
+    </nav>
+
+    <!-- Hero Section with 3D canvas in background -->
+    <section id="home" class="relative min-h-screen flex flex-col justify-center items-center text-center px-4 pt-24 md:pt-0">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight">
+          <span class="bg-gradient-to-r from-amber-300 via-white to-amber-400 bg-clip-text text-transparent">Crafting Dreams</span><br>
+          Into Reality
+        </h1>
+        <p class="text-gray-300 text-lg md:text-xl mt-6 max-w-2xl mx-auto">Premium furniture, timeless elegance. Discover curated collections that redefine your space.</p>
+        <div class="mt-10 flex flex-wrap gap-5 justify-center">
+          <a href="#showcase" class="btn-gold px-8 py-3 rounded-full font-semibold text-black shadow-xl flex items-center gap-2"><i class="fas fa-couch"></i> Explore Collection</a>
+          <a href="#contact" class="glass-panel px-8 py-3 rounded-full font-semibold border border-white/30 hover:bg-white/10 transition"><i class="fas fa-map-marker-alt mr-2"></i> Visit Store</a>
+        </div>
+        <div class="scroll-indicator absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-xs text-white/50">
+          <span>Scroll to discover</span>
+          <i class="fas fa-chevron-down text-white/70"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- Showcase Section: 3D Products cards -->
+    <section id="showcase" class="py-28 px-6 md:px-12">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <span class="text-amber-400 uppercase tracking-wider text-sm font-semibold">Handpicked for You</span>
+          <h2 class="text-4xl md:text-5xl font-bold mt-3">Signature Furniture</h2>
+          <div class="w-24 h-1 bg-amber-500 mx-auto mt-4 rounded-full"></div>
+        </div>
+        <div class="product-grid">
+          <!-- Card 1: Modern Velvet Sofa -->
+          <div class="glass-card rounded-2xl overflow-hidden p-6 text-center group">
+            <div class="h-56 flex items-center justify-center">
+              <i class="fas fa-couch text-7xl text-amber-300 group-hover:scale-110 transition duration-300"></i>
+            </div>
+            <h3 class="text-2xl font-bold mt-4">Velvet Luxe Sofa</h3>
+            <p class="text-gray-400 text-sm mt-2">Premium velvet, solid wood frame, modern elegance.</p>
+            <div class="mt-4 text-amber-400 font-semibold">Visit showroom for pricing</div>
+            <button onclick="window.location.href='#contact'" class="mt-5 border border-amber-500/60 rounded-full py-2 px-6 w-full hover:bg-amber-500/20 transition text-amber-300">Inquire Now</button>
+          </div>
+          <!-- Card 2: Minimalist Walnut Table -->
+          <div class="glass-card rounded-2xl overflow-hidden p-6 text-center group">
+            <div class="h-56 flex items-center justify-center">
+              <i class="fas fa-chair text-7xl text-amber-300 group-hover:scale-110 transition duration-300"></i>
+            </div>
+            <h3 class="text-2xl font-bold mt-4">Walnut Dining Table</h3>
+            <p class="text-gray-400 text-sm mt-2">Solid walnut, handcrafted finishes, seats 6-8.</p>
+            <div class="mt-4 text-amber-400 font-semibold">Custom sizes available</div>
+            <button onclick="window.location.href='#contact'" class="mt-5 border border-amber-500/60 rounded-full py-2 px-6 w-full hover:bg-amber-500/20 transition text-amber-300">Get Quote</button>
+          </div>
+          <!-- Card 3: Chesterfield Armchair -->
+          <div class="glass-card rounded-2xl overflow-hidden p-6 text-center group">
+            <div class="h-56 flex items-center justify-center">
+              <i class="fas fa-armchair text-7xl text-amber-300 group-hover:scale-110 transition duration-300"></i>
+            </div>
+            <h3 class="text-2xl font-bold mt-4">Chesterfield Armchair</h3>
+            <p class="text-gray-400 text-sm mt-2">Tufted leather, timeless British design.</p>
+            <div class="mt-4 text-amber-400 font-semibold">Exclusive to HayeeFurn</div>
+            <button onclick="window.location.href='#contact'" class="mt-5 border border-amber-500/60 rounded-full py-2 px-6 w-full hover:bg-amber-500/20 transition text-amber-300">View Details</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Branches & Showroom Section -->
+    <section id="branches" class="py-24 px-6 md:px-12 bg-black/40 backdrop-blur-sm">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div data-aos="fade-right">
+            <span class="text-amber-400 font-semibold tracking-wide"><i class="fas fa-store"></i> Our Presence</span>
+            <h2 class="text-4xl md:text-5xl font-bold mt-3 leading-tight">Two Prestigious <br> Showrooms in Thanjavur</h2>
+            <div class="mt-8 space-y-6">
+              <div class="flex items-start gap-4">
+                <div class="bg-amber-500/20 p-3 rounded-xl"><i class="fas fa-crown text-amber-400 text-xl"></i></div>
+                <div><h3 class="text-xl font-semibold">HayeeFurn - Flagship Store</h3><p class="text-gray-300">No: 2851, Trichy Rd, opp. Anu Hospital, VOC Nagar, Thanjavur</p></div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="bg-amber-500/20 p-3 rounded-xl"><i class="fas fa-palette text-amber-400 text-xl"></i></div>
+                <div><h3 class="text-xl font-semibold">Baarifurn Trendz - Second Branch</h3><p class="text-gray-300">Trendz hub, heart of Thanjavur — modern & contemporary</p></div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="bg-amber-500/20 p-3 rounded-xl"><i class="fas fa-clock text-amber-400 text-xl"></i></div>
+                <div><h3 class="text-xl font-semibold">Opening Hours</h3><p class="text-gray-300">Mon - Sun: 9:00 AM – 9:30 PM</p></div>
+              </div>
+            </div>
+            <a href="https://maps.app.goo.gl/qVzJMGafHnX6tNXp8" target="_blank" class="inline-flex items-center gap-2 mt-8 text-amber-400 border-b border-amber-400/40 pb-1 hover:gap-3 transition-all"><i class="fas fa-map-marked-alt"></i> Get Directions on Google Maps</a>
+          </div>
+          <div class="relative h-80 md:h-96 rounded-2xl overflow-hidden shadow-2xl border border-white/20">
+            <iframe src="https://maps.google.com/maps?q=No:%202851,%20Trichy%20Rd,%20opp.%20to%20Anu%20Hospital,%20VOC%20Nagar,%20Thanjavur&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" class="grayscale-[20%] hover:grayscale-0 transition duration-700"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact / CTA + Owner Info -->
+    <section id="contact" class="py-28 px-6 relative">
+      <div class="max-w-5xl mx-auto glass-panel p-10 md:p-14 text-center rounded-3xl">
+        <i class="fas fa-phone-alt text-4xl text-amber-400 mb-4"></i>
+        <h2 class="text-3xl md:text-4xl font-bold">Let’s Craft Your Dream Space</h2>
+        <p class="text-gray-300 mt-4 max-w-lg mx-auto">Visit our showroom or speak directly to our furniture experts.</p>
+        <div class="mt-8 flex flex-col md:flex-row justify-center gap-6 items-center">
+          <a href="tel:+917299030406" class="bg-amber-600 hover:bg-amber-700 px-8 py-4 rounded-full text-xl font-semibold transition shadow-xl flex items-center gap-3"><i class="fas fa-mobile-alt"></i> +91 72990 30406</a>
+          <a href="https://wa.me/917299030406?text=Hello%20HayeeFurn%2C%20I'm%20interested%20in%20premium%20furniture" target="_blank" class="border border-white/30 hover:bg-white/10 px-8 py-4 rounded-full text-xl font-semibold transition flex items-center gap-3"><i class="fab fa-whatsapp text-2xl text-green-400"></i> WhatsApp Inquiry</a>
+        </div>
+        <div class="mt-6 text-sm text-white/40">
+          <i class="fas fa-location-dot mr-1"></i> No: 2851, Trichy Rd, opp. Anu Hospital, VOC Nagar, Thanjavur, Tamil Nadu 613007
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 border-t border-white/10 text-center text-gray-400 text-sm">
+      <div class="flex justify-center gap-6 mb-4">
+        <i class="fab fa-instagram text-xl hover:text-amber-400 cursor-pointer"></i>
+        <i class="fab fa-facebook text-xl hover:text-amber-400 cursor-pointer"></i>
+        <i class="fab fa-pinterest text-xl hover:text-amber-400 cursor-pointer"></i>
+      </div>
+      <p>© 2026 HayeeFurn & Baarifurn Trendz — Premium furniture, crafted in Thanjavur.</p>
+      <p class="mt-1 text-xs">Experience luxury with 3D interactive design.</p>
+    </footer>
+  </div>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+    // --- setup scene, camera, renderer for 3D background ---
+    const canvas = document.getElementById('hero-canvas');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x050b14);
+    scene.fog = new THREE.FogExp2(0x050b14, 0.008); // subtle depth fog
+
+    // camera: perspective camera for immersive look
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 2, 8);
+    camera.lookAt(0, 0, 0);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.shadowMap.enabled = true; // enable shadows for realistic touch
+
+    // --- Lights: fill light, directional + ambient for model realism ---
+    const ambientLight = new THREE.AmbientLight(0x404060);
+    scene.add(ambientLight);
+    const mainLight = new THREE.DirectionalLight(0xfff5e0, 1.2);
+    mainLight.position.set(3, 5, 2);
+    mainLight.castShadow = true;
+    mainLight.receiveShadow = false;
+    scene.add(mainLight);
+    const fillLight = new THREE.PointLight(0xccaa77, 0.5);
+    fillLight.position.set(-2, 3, 4);
+    scene.add(fillLight);
+    const backLight = new THREE.PointLight(0x88aaff, 0.4);
+    backLight.position.set(0, 2, -5);
+    scene.add(backLight);
+    const rimLight = new THREE.PointLight(0xffaa66, 0.6);
+    rimLight.position.set(1, 2, -3);
+    scene.add(rimLight);
+
+    // Optional interactive orbit but we will not allow user drag to keep elegance, we just auto rotate a bit
+    // But we create a group of furniture models floating elegantly
+    
+    // Create a central group for rotating furniture objects
+    const furnitureGroup = new THREE.Group();
+    scene.add(furnitureGroup);
+
+    // Load multiple GLTF models (using free CDN models / fallback to geometry if fails)
+    // Since we guarantee no errors, we'll create beautiful custom geometries with golden and wood textures
+    // as backup: 3 stunning custom furniture pieces.
+    
+    // 1. Modern abstract 'Chaise' style using TorusKnot + extrusion? better: create a stylish floating seat.
+    const geometrySofa = new THREE.BoxGeometry(1.4, 0.6, 0.9);
+    const materialWood = new THREE.MeshStandardMaterial({ color: 0xc9a87c, roughness: 0.3, metalness: 0.2, emissive: 0x211a10 });
+    const sofaBase = new THREE.Mesh(geometrySofa, materialWood);
+    sofaBase.position.y = -0.2;
+    sofaBase.castShadow = true;
+    sofaBase.receiveShadow = false;
+    const cushionGeo = new THREE.BoxGeometry(1.2, 0.3, 0.8);
+    const cushionMat = new THREE.MeshStandardMaterial({ color: 0xb87c4f, roughness: 0.5, metalness: 0.05 });
+    const cushion = new THREE.Mesh(cushionGeo, cushionMat);
+    cushion.position.y = 0.2;
+    sofaBase.add(cushion);
+    
+    // 2. Circular modern table with golden accents
+    const tableGroup = new THREE.Group();
+    const tableTop = new THREE.CylinderGeometry(0.9, 0.9, 0.15, 48);
+    const goldMat = new THREE.MeshStandardMaterial({ color: 0xcba135, metalness: 0.85, roughness: 0.25, emissive: 0x332200 });
+    const topMesh = new THREE.Mesh(tableTop, goldMat);
+    topMesh.position.y = 0.5;
+    tableGroup.add(topMesh);
+    const legGeo = new THREE.CylinderGeometry(0.1, 0.15, 0.7, 8);
+    const legMat = new THREE.MeshStandardMaterial({ color: 0xaa8855, metalness: 0.7 });
+    for (let i = 0; i < 3; i++) {
+      const leg = new THREE.Mesh(legGeo, legMat);
+      const angle = (i / 3) * Math.PI * 2;
+      leg.position.x = Math.cos(angle) * 0.6;
+      leg.position.z = Math.sin(angle) * 0.6;
+      leg.position.y = 0.05;
+      tableGroup.add(leg);
+    }
+    tableGroup.position.set(1.2, -0.4, 1);
+    
+    // 3. Abstract designer chair (curved back)
+    const chairGroup = new THREE.Group();
+    const seatBase = new THREE.BoxGeometry(0.8, 0.2, 0.8);
+    const seatMat = new THREE.MeshStandardMaterial({ color: 0xaa7c5c, roughness: 0.4 });
+    const seatMesh = new THREE.Mesh(seatBase, seatMat);
+    seatMesh.position.y = 0.1;
+    chairGroup.add(seatMesh);
+    const backGeo = new THREE.BoxGeometry(0.8, 0.7, 0.1);
+    const backMat = new THREE.MeshStandardMaterial({ color: 0xbc8f6a });
+    const backMesh = new THREE.Mesh(backGeo, backMat);
+    backMesh.position.set(0, 0.5, -0.4);
+    chairGroup.add(backMesh);
+    chairGroup.position.set(-1.4, -0.3, 0.6);
+    
+    furnitureGroup.add(sofaBase);
+    furnitureGroup.add(tableGroup);
+    furnitureGroup.add(chairGroup);
+    
+    // Add floating golden particles (stars + dust)
+    const starCount = 1800;
+    const starGeometry = new THREE.BufferGeometry();
+    const starPositions = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount; i++) {
+      starPositions[i*3] = (Math.random() - 0.5) * 180;
+      starPositions[i*3+1] = (Math.random() - 0.5) * 80;
+      starPositions[i*3+2] = (Math.random() - 0.5) * 90 - 40;
+    }
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    const starMaterial = new THREE.PointsMaterial({ color: 0xffe6aa, size: 0.08, transparent: true, opacity: 0.6 });
+    const stars = new THREE.Points(starGeometry, starMaterial);
+    scene.add(stars);
+    
+    // Additional floating dust particles around furniture
+    const dustCount = 800;
+    const dustGeo = new THREE.BufferGeometry();
+    const dustPositions = new Float32Array(dustCount * 3);
+    for (let i = 0; i < dustCount; i++) {
+      dustPositions[i*3] = (Math.random() - 0.5) * 7;
+      dustPositions[i*3+1] = (Math.random() - 0.5) * 4;
+      dustPositions[i*3+2] = (Math.random() - 0.5) * 6;
+    }
+    dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPositions, 3));
+    const dustMat = new THREE.PointsMaterial({ color: 0xc7a45a, size: 0.02, transparent: true });
+    const dustParticles = new THREE.Points(dustGeo, dustMat);
+    furnitureGroup.add(dustParticles);
+    
+    // subtle rotating animation + slight camera float
+    let time = 0;
+    
+    // smooth animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      time += 0.005;
+      
+      // Gentle rotation for the group
+      furnitureGroup.rotation.y = Math.sin(time * 0.2) * 0.35;
+      furnitureGroup.rotation.x = Math.sin(time * 0.15) * 0.1;
+      furnitureGroup.position.y = Math.sin(time * 0.6) * 0.03;
+      
+      // Stars slowly rotate and drift
+      stars.rotation.y += 0.0005;
+      stars.rotation.x += 0.0003;
+      
+      // subtle camera hovering movement for cinematic feel
+      camera.position.x += (0 - camera.position.x) * 0.02;
+      camera.position.y += (Math.sin(time * 0.4) * 0.05 - camera.position.y) * 0.03;
+      camera.lookAt(0, 0.5, 0);
+      
+      renderer.render(scene, camera);
+    }
+    
+    animate();
+    
+    // Handle window resize
+    window.addEventListener('resize', onWindowResize, false);
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+    
+    // fallback GLTF loading attempt: optional - but we already have fallback
+    // load external model if network allows, but we ignore errors gracefully
+    const loader = new GLTFLoader();
+    loader.load('https://threejs.org/examples/models/gltf/Flamingo.gltf', (gltf) => {
+      // if we get a model, we replace/ add a nice decorative piece but our custom models are already good
+      const model = gltf.scene;
+      model.scale.set(0.25, 0.25, 0.25);
+      model.position.set(1.8, -0.5, -1.2);
+      furnitureGroup.add(model);
+    }, undefined, (error) => {
+      // silent fail — no console errors to keep flawless user experience
+    });
+    
+    // slight manual control to disable pointer events, ensure canvas is only background
+    canvas.style.pointerEvents = 'none';
+  </script>
+</body>
+</html>
