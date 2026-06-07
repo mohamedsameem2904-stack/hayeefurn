@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>HayeeFurn | 3D Immersive Furniture Studio</title>
+  <title>HayeeFurn | 3D Immersive Furniture | Royal Collection</title>
   <!-- Google Fonts, Tailwind, Font Awesome -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -37,7 +37,7 @@
       width: 100%;
       height: 100%;
       z-index: 0;
-      pointer-events: none; /* allows clicking through to content */
+      pointer-events: none;
     }
     /* main content overlay */
     .content-layer {
@@ -66,26 +66,29 @@
       transform: scale(1.02);
       box-shadow: 0 10px 20px -5px rgba(212, 175, 55, 0.4);
     }
-    .badge-logo {
+    /* premium logo badge */
+    .premium-badge {
       position: absolute;
       top: 1rem;
       right: 1rem;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(4px);
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(5px);
       border-radius: 40px;
-      padding: 0.3rem 0.8rem;
-      font-size: 0.7rem;
+      padding: 0.35rem 1rem;
+      font-size: 0.75rem;
       font-weight: bold;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       border-left: 3px solid #d4af37;
       font-family: monospace;
       letter-spacing: 0.5px;
-      z-index: 5;
+      z-index: 15;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
-    .badge-logo i {
+    .premium-badge i {
       color: #d4af37;
+      font-size: 0.9rem;
     }
     /* scroll animation */
     .scroll-down {
@@ -95,7 +98,6 @@
       0%,100%{ transform: translateY(0); opacity: 0.6; }
       50%{ transform: translateY(8px); opacity: 1; }
     }
-    /* custom product grid */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -114,11 +116,15 @@
       background: #d4af37;
       border-radius: 10px;
     }
+    .scheme-glow {
+      background: linear-gradient(145deg, rgba(212,175,55,0.1), rgba(0,0,0,0.6));
+      border: 1px solid rgba(212,175,55,0.5);
+    }
   </style>
 </head>
 <body>
 
-  <!-- 3D Canvas Background (full interactive scene) -->
+  <!-- 3D Canvas Background -->
   <canvas id="three-canvas"></canvas>
 
   <div class="content-layer">
@@ -131,7 +137,7 @@
       <div class="hidden md:flex gap-8 text-sm font-medium">
         <a href="#home" class="hover:text-amber-400 transition">Home</a>
         <a href="#showcase" class="hover:text-amber-400 transition">Signature Collection</a>
-        <a href="#craftsmanship" class="hover:text-amber-400 transition">Craftsmanship</a>
+        <a href="#buyer-scheme" class="hover:text-amber-400 transition">Buyer Scheme</a>
         <a href="#branches" class="hover:text-amber-400 transition">Branches</a>
         <a href="#contact" class="hover:text-amber-400 transition">Contact</a>
       </div>
@@ -140,7 +146,7 @@
       </a>
     </nav>
 
-    <!-- Hero Section (3D visible behind) -->
+    <!-- Hero Section -->
     <section id="home" class="relative min-h-screen flex flex-col justify-center items-center text-center px-4 pt-20 md:pt-0">
       <div class="max-w-5xl mx-auto">
         <div class="inline-block px-4 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-sm mb-6 backdrop-blur-sm">
@@ -162,7 +168,7 @@
       </div>
     </section>
 
-    <!-- Signature Collection Section (with logo badge on Chesterfield card) -->
+    <!-- Signature Collection Section (with NEW Royal Regent Wing Chair + LOGO badge) -->
     <section id="showcase" class="py-28 px-6 md:px-12">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-16">
@@ -181,7 +187,7 @@
             <div class="mt-4 text-amber-400 font-semibold">Visit showroom for pricing</div>
             <button onclick="window.location.href='#contact'" class="mt-5 border border-amber-500/60 rounded-full py-2 px-6 w-full hover:bg-amber-500/20 transition text-amber-300">Inquire Now</button>
           </div>
-          <!-- Card 2: Walnut Table + extra -->
+          <!-- Card 2: Walnut Table -->
           <div class="glass-card rounded-2xl overflow-hidden p-6 text-center relative group">
             <div class="h-56 flex items-center justify-center">
               <i class="fas fa-chair text-7xl text-amber-300 group-hover:scale-110 transition duration-300"></i>
@@ -191,25 +197,24 @@
             <div class="mt-4 text-amber-400 font-semibold">Custom sizes available</div>
             <button onclick="window.location.href='#contact'" class="mt-5 border border-amber-500/60 rounded-full py-2 px-6 w-full hover:bg-amber-500/20 transition text-amber-300">Get Quote</button>
           </div>
-          <!-- Card 3: Chesterfield Armchair with EXCLUSIVE LOGO BADGE -->
+          <!-- NEW Card: Royal Regent Wing Chair (Replaces Chesterfield) with PROMINENT LOGO BADGE -->
           <div class="glass-card rounded-2xl overflow-hidden p-6 text-center relative group">
-            <!-- custom logo badge: HayeeFurn signature emblem -->
-            <div class="badge-logo">
+            <!-- Logo Badge: HayeeFurn Signature Emblem -->
+            <div class="premium-badge">
               <i class="fas fa-crown"></i> <span>HAYEE SIGNATURE</span>
             </div>
             <div class="h-56 flex items-center justify-center">
-              <i class="fas fa-armchair text-7xl text-amber-300 group-hover:scale-110 transition duration-300"></i>
+              <i class="fas fa-chess-queen text-7xl text-amber-300 group-hover:scale-110 transition duration-300"></i>
             </div>
-            <h3 class="text-2xl font-bold mt-4">Chesterfield Armchair</h3>
-            <p class="text-gray-400 text-sm mt-2">Tufted leather, timeless British design, hand-tufted details.</p>
+            <h3 class="text-2xl font-bold mt-4">Royal Regent Wing Chair</h3>
+            <p class="text-gray-400 text-sm mt-2">Hand-tufted velvet, mahogany legs, British regency style with lavish comfort.</p>
             <div class="mt-4 text-amber-400 font-semibold">Exclusive to HayeeFurn</div>
             <button onclick="window.location.href='#contact'" class="mt-5 border border-amber-500/60 rounded-full py-2 px-6 w-full hover:bg-amber-500/20 transition text-amber-300">View Details</button>
           </div>
         </div>
       </div>
     </section>
-
-    <!-- NEW SECTION 1: Our Craftsmanship (3D & story) -->
+    <!-- Craftsmanship Section (extra premium) -->
     <section id="craftsmanship" class="py-24 px-6 md:px-12 bg-black/30 backdrop-blur-sm">
       <div class="max-w-7xl mx-auto">
         <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -217,7 +222,7 @@
             <i class="fas fa-gem text-4xl text-amber-400 mb-4"></i>
             <h2 class="text-4xl md:text-5xl font-bold">Artisan Craftsmanship</h2>
             <div class="w-20 h-1 bg-amber-500 my-5"></div>
-            <p class="text-gray-300 text-lg leading-relaxed">Every piece from HayeeFurn tells a story of dedication. Using premium teak, Italian leathers, and sustainable materials — our master artisans blend tradition with contemporary design. Each Chesterfield undergoes 72 hours of hand-tufting.</p>
+            <p class="text-gray-300 text-lg leading-relaxed">Every piece from HayeeFurn tells a story of dedication. Using premium teak, Italian leathers, and sustainable materials — our master artisans blend tradition with contemporary design. Each wing chair undergoes 72 hours of hand-tufting.</p>
             <ul class="mt-6 space-y-3">
               <li class="flex items-center gap-3"><i class="fas fa-check-circle text-amber-400"></i> 100% solid wood frames</li>
               <li class="flex items-center gap-3"><i class="fas fa-check-circle text-amber-400"></i> Eco-friendly finishes & fabrics</li>
@@ -233,7 +238,7 @@
       </div>
     </section>
 
-    <!-- NEW SECTION 2: Latest Innovations + 3D design teaser -->
+    <!-- Additional: Innovations & Testimonials (3+ sections added) -->
     <section class="py-24 px-6 md:px-12">
       <div class="max-w-7xl mx-auto text-center">
         <span class="text-amber-400 uppercase text-sm tracking-wider">new arrivals</span>
@@ -258,7 +263,7 @@
       </div>
     </section>
 
-    <!-- NEW SECTION 3: Testimonials (social proof) -->
+    <!-- Testimonials -->
     <section class="py-20 px-6 bg-black/40">
       <div class="max-w-6xl mx-auto">
         <div class="text-center">
@@ -268,7 +273,7 @@
         <div class="grid md:grid-cols-3 gap-8 mt-14">
           <div class="glass-card p-6 rounded-2xl">
             <div class="flex gap-1 text-amber-400 mb-3">★★★★★</div>
-            <p class="italic">"The Chesterfield Armchair transformed my living room. Quality is unmatched and the team delivered with care."</p>
+            <p class="italic">"The Royal Regent Wing Chair is a masterpiece. Quality is unmatched and the team delivered with care."</p>
             <div class="mt-4 font-semibold">— Arjun K., Civil Contractor</div>
           </div>
           <div class="glass-card p-6 rounded-2xl">
@@ -278,14 +283,14 @@
           </div>
           <div class="glass-card p-6 rounded-2xl">
             <div class="flex gap-1 text-amber-400 mb-3">★★★★★</div>
-            <p class="italic">"Premium furniture at honest prices. Their customisation service is brilliant."</p>
+            <p class="italic">"Premium furniture at honest prices. Their buyer scheme made it even more affordable."</p>
             <div class="mt-4 font-semibold">— Dhanush R., Business Owner</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Branches Section (with map and second branch) -->
+    <!-- Branches Section (with map) -->
     <section id="branches" class="py-24 px-6 md:px-12">
       <div class="max-w-7xl mx-auto">
         <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -315,7 +320,7 @@
       </div>
     </section>
 
-    <!-- Contact Section + Owner Mobile -->
+    <!-- Contact Section -->
     <section id="contact" class="py-28 px-6">
       <div class="max-w-5xl mx-auto glass-card p-10 md:p-14 text-center rounded-3xl">
         <i class="fas fa-concierge-bell text-4xl text-amber-400 mb-4"></i>
@@ -323,7 +328,7 @@
         <p class="text-gray-300 mt-4 max-w-lg mx-auto">Speak with our design consultants, custom orders welcome.</p>
         <div class="mt-8 flex flex-col md:flex-row justify-center gap-6 items-center">
           <a href="tel:+917299030406" class="bg-amber-600 hover:bg-amber-700 px-8 py-4 rounded-full text-xl font-semibold transition shadow-xl flex items-center gap-3"><i class="fas fa-mobile-alt"></i> +91 72990 30406</a>
-          <a href="https://wa.me/917299030406?text=Hello%20HayeeFurn%2C%20I'm%20interested%20in%20premium%20furniture%203D%20collection" target="_blank" class="border border-white/30 hover:bg-white/10 px-8 py-4 rounded-full text-xl font-semibold transition flex items-center gap-3"><i class="fab fa-whatsapp text-2xl text-green-400"></i> WhatsApp Inquiry</a>
+          <a href="https://wa.me/917299030406?text=Hello%20HayeeFurn%2C%20I'm%20interested%20in%20premium%20furniture%203D%20collection%20and%20buyer%20scheme" target="_blank" class="border border-white/30 hover:bg-white/10 px-8 py-4 rounded-full text-xl font-semibold transition flex items-center gap-3"><i class="fab fa-whatsapp text-2xl text-green-400"></i> WhatsApp Inquiry</a>
         </div>
         <div class="mt-6 text-sm text-white/40">
           <i class="fas fa-location-dot mr-1"></i> No: 2851, Trichy Rd, VOC Nagar, Thanjavur, Tamil Nadu 613007 | Owner: Mr. A. Hameed
@@ -339,7 +344,7 @@
         <i class="fab fa-pinterest text-xl hover:text-amber-400 cursor-pointer transition"></i>
       </div>
       <p>© 2026 HayeeFurn & Baarifurn Trendz — Redefining furniture craftsmanship in Thanjavur.</p>
-      <p class="mt-1 text-xs">Immersive 3D interactive experience powered by WebGL.</p>
+      <p class="mt-1 text-xs">Immersive 3D interactive experience with exclusive buyer schemes.</p>
     </footer>
   </div>
 
@@ -347,7 +352,7 @@
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
     
-    // --- setup fullscreen 3D scene with rotating modern furniture elements + particles + floating lights
+    // --- setup fullscreen 3D scene with rotating furniture elements + particles
     const canvas = document.getElementById('three-canvas');
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x030712);
@@ -383,8 +388,8 @@
     const furnitureGroup = new THREE.Group();
     scene.add(furnitureGroup);
     
-    // --- create 3D stylised furniture models using geometries (rich look)
-    // 1. Luxe Sofa (modern)
+    // --- create 3D stylised furniture models using geometries
+    // 1. Luxe Sofa 
     const sofaMat = new THREE.MeshStandardMaterial({ color: 0xb87c4f, roughness: 0.35, metalness: 0.1 });
     const sofaBase = new THREE.BoxGeometry(1.6, 0.5, 0.9);
     const sofaMesh = new THREE.Mesh(sofaBase, sofaMat);
@@ -397,7 +402,7 @@
     sofaMesh.add(backCush);
     furnitureGroup.add(sofaMesh);
     
-    // 2. Minimalist round table with gold
+    // 2. Round table with gold
     const tableTopGeo = new THREE.CylinderGeometry(0.85, 0.85, 0.12, 32);
     const goldMat = new THREE.MeshStandardMaterial({ color: 0xcd9f3c, metalness: 0.85, roughness: 0.2 });
     const topTable = new THREE.Mesh(tableTopGeo, goldMat);
@@ -405,28 +410,34 @@
     topTable.castShadow = true;
     furnitureGroup.add(topTable);
     
-    // 3. Chesterfield style armchair (3D representation)
+    // 3. Royal Regent Wing Chair style (modern elegant)
     const chairGroup = new THREE.Group();
-    const seat = new THREE.BoxGeometry(0.9, 0.3, 0.85);
-    const chairMat = new THREE.MeshStandardMaterial({ color: 0xaa7c5c, roughness: 0.25 });
+    const seat = new THREE.BoxGeometry(0.95, 0.3, 0.9);
+    const chairMat = new THREE.MeshStandardMaterial({ color: 0xbc8a5f, roughness: 0.25, metalness: 0.05 });
     const seatMesh = new THREE.Mesh(seat, chairMat);
     seatMesh.position.y = -0.1;
     chairGroup.add(seatMesh);
-    const backGeo = new THREE.BoxGeometry(0.9, 0.7, 0.12);
+    const backGeo = new THREE.BoxGeometry(0.95, 0.75, 0.12);
     const backMesh = new THREE.Mesh(backGeo, chairMat);
-    backMesh.position.set(0, 0.3, -0.45);
+    backMesh.position.set(0, 0.35, -0.48);
     chairGroup.add(backMesh);
-    // armrests
-    const armGeo = new THREE.BoxGeometry(0.2, 0.2, 0.7);
+    const armGeo = new THREE.BoxGeometry(0.22, 0.22, 0.75);
     const leftArm = new THREE.Mesh(armGeo, chairMat);
-    leftArm.position.set(-0.6, 0, 0);
+    leftArm.position.set(-0.65, 0, 0);
     const rightArm = new THREE.Mesh(armGeo, chairMat);
-    rightArm.position.set(0.6, 0, 0);
+    rightArm.position.set(0.65, 0, 0);
     chairGroup.add(leftArm, rightArm);
-    chairGroup.position.set(-1.3, -0.25, 0.7);
+    // wing details
+    const wingGeo = new THREE.BoxGeometry(0.25, 0.4, 0.1);
+    const leftWing = new THREE.Mesh(wingGeo, chairMat);
+    leftWing.position.set(-0.78, 0.45, -0.3);
+    const rightWing = new THREE.Mesh(wingGeo, chairMat);
+    rightWing.position.set(0.78, 0.45, -0.3);
+    chairGroup.add(leftWing, rightWing);
+    chairGroup.position.set(-1.4, -0.25, 0.8);
     furnitureGroup.add(chairGroup);
     
-    // floating golden particles + stars
+    // floating particles and stars
     const starCount = 2000;
     const starGeo = new THREE.BufferGeometry();
     const starPos = new Float32Array(starCount * 3);
@@ -440,7 +451,6 @@
     const stars = new THREE.Points(starGeo, starMat);
     scene.add(stars);
     
-    // dust around furniture
     const dustCount = 1200;
     const dustGeo = new THREE.BufferGeometry();
     const dustPosArr = new Float32Array(dustCount * 3);
@@ -454,7 +464,6 @@
     const dustPart = new THREE.Points(dustGeo, dustMat);
     furnitureGroup.add(dustPart);
     
-    // additional glowing torus knot for modern vibe
     const knotGeo = new THREE.TorusKnotGeometry(0.45, 0.08, 128, 16, 3, 4);
     const knotMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, emissive: 0x442200, metalness: 0.9 });
     const knot = new THREE.Mesh(knotGeo, knotMat);
@@ -471,25 +480,18 @@
     function animate() {
       requestAnimationFrame(animate);
       time += 0.008;
-      
-      // subtle rotation for entire furniture group based on time + mouse influence
       furnitureGroup.rotation.y = Math.sin(time * 0.2) * 0.2 + mouseX * 0.2;
       furnitureGroup.rotation.x = Math.sin(time * 0.17) * 0.1 + mouseY * 0.1;
       furnitureGroup.position.y = Math.sin(time * 0.5) * 0.04;
-      
       knot.rotation.x = time * 0.8;
       knot.rotation.y = time * 0.5;
-      
       stars.rotation.y += 0.0003;
       stars.rotation.x += 0.0002;
-      
       movingLight.position.x = 2 + Math.sin(time * 1.2) * 1;
       movingLight.intensity = 0.6 + Math.sin(time * 2) * 0.2;
-      
       camera.position.x += (mouseX * 0.3 - camera.position.x) * 0.03;
       camera.position.y += (mouseY * 0.2 + 1.6 - camera.position.y) * 0.03;
       camera.lookAt(0, 0.8, 0);
-      
       renderer.render(scene, camera);
     }
     animate();
@@ -500,7 +502,6 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
     
-    // ensure canvas doesn't block interactions
     canvas.style.pointerEvents = 'none';
   </script>
 </body>
